@@ -93,6 +93,12 @@ function showProjectCompletedTasksDiv(){
 function showProjectTasksDetailDiv(e){
     if(e==0){
         fetchCurrentBacklogTaskInformation();
+    }else if (e==1){
+        fetchCurrentAssignedTaskInformation();
+    }else if (e==2){
+        fetchCurrentUnassignedTaskInformation();
+    }else if (e==3){
+        fetchCurrentCompletedTaskInformation();
     }
     document.getElementById("project-div-content-tasks-selected-detail").style.display = "block"; 
 }
