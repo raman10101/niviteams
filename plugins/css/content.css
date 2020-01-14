@@ -1,0 +1,233 @@
+.content-main-div{
+    display: none;
+    width:100%;
+    height:100%;
+    position: relative;
+}
+
+/* Css For Intro Page */
+
+#intro-page{
+    /* display:none; */
+    width:100%;
+    height:100%;
+    position:relative;
+    background-color: aquamarine;;
+}
+#intro-center-box{
+    width:800px;
+    height:300px;
+    position:absolute;
+    margin:auto;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    border:1px solid black;
+}
+#intro-center-box h2{
+    display: block;
+    text-align: center;
+}
+.intro-box{
+    display:inline-block;
+    width:200px;
+    height:200px;
+    border:1px solid black;
+}
+#intro-table{
+    width:100%;
+}
+#intro-table tr td{
+    height: 200px;
+    border:1px solid black;
+}
+
+/* Css For Non Linked Tasks */
+
+#non-linked-tasks{
+    display: none;
+    width:100%;
+    height:100%;
+    position: absolute;
+    background-color: rgb(241,241,241);
+}
+#non-linked-tasks table{
+    margin-left:20px;
+    display:inline-table;
+    table-layout:fixed; 
+    height:100%;
+    position:relative;
+    /* border:1px solid black; */
+}
+#non-linked-tasks table tr td{
+    background-color: rgb(241,241,241);
+    margin:0;
+    padding:0;
+}
+#non-linked-todo-tasks{
+    width:100%;
+    height:90%;
+    position:relative;
+    overflow: auto;
+}
+.table-task{
+    width:350px;
+    position:relative;
+    height:150px;
+    margin:5px;
+    background-color: rgb(200,200,241);
+}
+.table-task-icons{
+    height:30px;
+    position: absolute;
+    bottom:0;
+    width:100%;
+    /* border:1px solid black; */
+}
+.icon-div{
+    width:30px;
+    height:30px;
+    float:left;
+    /* border:1px solid black; */
+}
+.icon-div i{
+    width:100%;
+    height:100%;
+}
+
+/* Project List Div Css */
+.project-list-box{
+    width:200px;
+    height:100px;
+    border:1px solid black;
+}
+
+/* Project Div Css */
+#project-div{
+    display:none;
+    width:100%;
+    height:100%;
+    position:relative;
+    background-color: antiquewhite;;
+}
+#project-div-left-menu{
+    width:200px;
+    height:100%;
+    /* border:1px solid black; */
+    box-sizing: border-box;
+    float:left;
+}
+#project-heading{
+    width:100%;
+    height:50px;
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+}
+#project-div-content{
+    width:calc( 100% - 200px );
+    height:100%;
+    /* border:1px solid black; */
+    box-sizing: border-box;
+    float:left;
+}
+#project-div-content-top{
+    width:100%;
+    height:50px;
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+}
+.content-box{
+    display:none;
+    width:100%;
+    height:100%;
+    /* border:1px solid black; */
+    box-sizing:border-box;
+    float:left;
+}
+#project-div-content-tasks-top{
+    width:100%;
+    height:40px;
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+}
+#project-div-content-tasks-backlog-list{
+    display:none;
+    width:50%;
+    height:calc( 100% - 40px);
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+    float:left;
+}
+#project-div-content-tasks-selected-detail{
+    display:none;
+    width:50%;
+    height:calc( 100% - 40px);
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+    float:left;
+    border:1px solid black;
+}
+#project-div-content-tasks-assigned-list{
+    display:none;
+    width:50%;
+    height:calc( 100% - 40px);
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+    float:left;
+}
+#project-div-content-tasks-unassigned-list{
+    display:none;
+    width:50%;
+    height:calc( 100% - 40px);
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+    float:left;
+}
+#project-div-content-tasks-completed-list{
+    display:none;
+    width:50%;
+    height:calc( 100% - 40px);
+    padding:20px;
+    padding-top:20px;
+    font-weight:bold;
+    border-bottom:2px solid #aaa;
+    box-sizing: border-box;
+    float:left;
+}
+.project-task-box{
+    width:100%;
+    height:100px;
+    border:1px solid black;
+}
+.project-member-box{
+    width:100%;
+    height:100px;
+    border:1px solid black;
+}
+.project-team-box{
+    width:100%;
+    height:100px;
+    border:1px solid black;
+}
