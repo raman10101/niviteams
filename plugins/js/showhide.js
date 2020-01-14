@@ -28,6 +28,7 @@ function showProjectDiv(){
     hideContentDiv();
     showProjectTasks();
     document.getElementById("project-div").style.display = "block";
+    document.getElementById('project-name').innerHTML = getCurrentProjectName();
 }
 
 
@@ -53,6 +54,7 @@ function showProjectCreateAddMember(){
 function showProjectTasks(){
     hideProjectContentDiv();
     fetchTasksOfProject();
+    showProjectBacklogTasksDiv();
     document.getElementById("project-div-content-tasks").style.display = "block"; 
 }
 function showProjectTeams(){

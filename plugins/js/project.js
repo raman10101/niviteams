@@ -2,6 +2,11 @@ function getProjectId() {
     let projectId = localStorage.getItem("current-project-id");
     return projectId;
 }
+function getCurrentProjectName(){
+    let currentProject = JSON.parse(localStorage.getItem("current-project"));
+    return currentProject.project_name;
+
+}
 function setCurrentTaskId(currentTaskId) {
     localStorage.setItem("current-task-id", currentTaskId);
 }
@@ -44,12 +49,16 @@ function fetchProjects() {
                 boxDiv.setAttribute("class", "project-list-box");
                 boxDiv.addEventListener('click', function () {
                     localStorage.setItem("current-project-id", project_list[i].project_id);
+                    localStorage.setItem("current-project",JSON.stringify(project_list[i]));
                     showProjectDiv();
+                    fetchMembersOfProject();
                 });
-                ////////////////////////////////////////////////////////////////////////////////
-                // TODO : Add Project Name, Project Description
-                ////////////////////////////////////////////////////////////////////////////////
-
+                let namediv = document.createElement('div');
+                let descdiv = document.createElement('div');
+                namediv.innerHTML= project_list[i].project_name;
+                descdiv.innerHTML= project_list[i].project_description;
+                boxDiv.appendChild(namediv);
+                boxDiv.appendChild(descdiv);
                 project_list_div.appendChild(boxDiv);
             }
 
@@ -303,6 +312,31 @@ function fetchMembersOfProject() {
         }
     });
 }
+function fetchCommentsOfTask(){
+    let taskId = getCurrentTaskId();
+    $.ajax({
+        url: "http://appnivi.com/niviteams/server/v1/Comment/fetchCommentsOfTask ",
+        type: 'post',
+        data: {
+            userid: getUserId(),
+            taskid: taskId,
+            projectid: getProjectId()
+        },
+        success: function (data) {
+            console.log("Cooments Fetched");
+            console.log(data);
+            if (data["error"] == false){
+            let comments = data.comment;
+            console.log(comments);
+            return comments;
+            }
+        },
+        error: function (xhr) {
+            console.log(xhr);
+        }
+    });
+}
+
 function fetchCurrentBacklogTaskInformation() {
     let taskId = getCurrentTaskId();
     let parentElem = document.getElementById("project-div-content-tasks-selected-detail");
@@ -337,6 +371,9 @@ function fetchCurrentBacklogTaskInformation() {
     btn.addEventListener('click', function () {
         assignProjectTaskToMember();
     });
+    
+
+
     parentElem.appendChild(btn);
 
     if(getUserId() == currentProjectTask.user_id){
@@ -347,6 +384,40 @@ function fetchCurrentBacklogTaskInformation() {
     });
     parentElem.appendChild(btn);
     }
+
+    let commentDiv = document.createElement("div");
+    commentDiv.setAttribute("class","comment-box");
+    let commentInput = document.createElement('input');
+    commentInput.setAttribute('type', 'text');
+    commentInput.setAttribute('id', 'comment_message');
+    let commentButton = document.createElement('button');
+    commentButton.innerHTML = "Comment";
+    commentDiv.appendChild(commentInput);
+    commentDiv.appendChild(commentButton);
+    commentButton.addEventListener('click', function(){
+
+        addCommentToProjectTask();
+    });
+    parentElem.appendChild(commentDiv);
+
+
+    
+   
+
+    let conversationsDiv = document.createElement('div');
+    conversationsDiv.setAttribute('class', 'conversations-box');
+
+
+    ///FetchCommentsOfTask
+    let comments= fetchCommentsOfTask(); 
+    for(let i=0;i<comments.length;i++){
+        let singleCommentDiv = document.createElement('div');
+        singleCommentDiv.setAttribute('class',coversation-single-box);
+        singleCommentDiv.textContent(comments[i].comment_text); 
+        conversationsDiv.appendChild(singleCommentDiv);
+    }
+    parentElem.appendChild(conversationsDiv);
+
 }
 
 function fetchCurrentAssignedTaskInformation() {
@@ -386,6 +457,19 @@ function fetchCurrentAssignedTaskInformation() {
     parentElem.appendChild(btn);
     }
 
+    let commentDiv = document.createElement("div");
+    commentDiv.setAttribute("class","comment-box");
+    parentElem.appendChild(commentDiv);
+    let commentInput = document.createElement('input');
+    commentInput.setAttribute('type', 'text');
+    commentInput.setAttribute('id', 'comment_message');
+    let commentButton = document.createElement('button');
+    commentButton.innerHTML = "Comment";
+    commentDiv.appendChild(commentInput);
+    commentDiv.appendChild(commentButton);
+    commentButton.addEventListener('click', function(){
+        addCommentToProjectTask();
+    });
 
 }
 
@@ -433,6 +517,20 @@ function fetchCurrentUnassignedTaskInformation() {
     });
     parentElem.appendChild(btn);
     }
+
+    let commentDiv = document.createElement("div");
+    commentDiv.setAttribute("class","comment-box");
+    parentElem.appendChild(commentDiv);
+    let commentInput = document.createElement('input');
+    commentInput.setAttribute('type', 'text');
+    commentInput.setAttribute('id', 'comment_message');
+    let commentButton = document.createElement('button');
+    commentButton.innerHTML = "Comment";
+    commentDiv.appendChild(commentInput);
+    commentDiv.appendChild(commentButton);
+    commentButton.addEventListener('click', function(){
+        addCommentToProjectTask();
+    });
 }
 
 function fetchCurrentCompletedTaskInformation() {
@@ -457,6 +555,19 @@ function fetchCurrentCompletedTaskInformation() {
     parentElem.appendChild(btn);
     }
 
+    let commentDiv = document.createElement("div");
+    commentDiv.setAttribute("class","comment-box");
+    parentElem.appendChild(commentDiv);
+    let commentInput = document.createElement('input');
+    commentInput.setAttribute('type', 'text');
+    commentInput.setAttribute('id', 'comment_message');
+    let commentButton = document.createElement('button');
+    commentButton.innerHTML = "Comment";
+    commentDiv.appendChild(commentInput);
+    commentDiv.appendChild(commentButton);
+    commentButton.addEventListener('click', function(){
+        addCommentToProjectTask();
+    });
 }
 
 
@@ -557,4 +668,29 @@ function deleteProjectTask(){
         }
     });
 
+}
+
+function addCommentToProjectTask(){
+    let taskId = getCurrentTaskId();
+    let user_id = getUserId();
+    let projectId = getProjectId();
+    let message = document.getElementById('comment_message').value;
+    $.ajax({
+        url: "http://appnivi.com/niviteams/server/v1/Comment/addComment ",
+        type: 'post',
+        data: {
+            userid: user_id,
+            taskid: taskId,
+            projectid: projectId,
+            text: message
+        },
+        success: function (data) {
+            console.log(data);
+            if (data['error'] == false)
+                showProjectTasks();
+        },
+        error: function (xhr) {
+            console.log(xhr);
+        }
+    });
 }
