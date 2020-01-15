@@ -1,94 +1,94 @@
 // Show Hide Content Div
 
-let contentDivs = ["intro-page","non-linked-tasks", "project-list-div","project-div"];
+let contentDivs = [WELCOME_DIV_ID, NON_LINKED_TASKS_ID, PROJECT_LIST_ID, PROJECT_DIV_ID];
 
 function hideContentDiv(){
     for(let i = 0; i<contentDivs.length;i++){
-        document.getElementById(contentDivs[i]).style.display="none";
+        hideElementById(contentDivs[i]);
     }
 }
 function showIntroPageDiv(){
     hideContentDiv();
-    document.getElementById("intro-page").style.display = "block"; 
+    showElementById(WELCOME_DIV_ID); 
 }
 function showNonLinkedTaskDiv(){
     hideModalDiv();
     hideContentDiv();
     fetchNonLinkedTask();
-    document.getElementById("non-linked-tasks").style.display = "block";
+    showElementById(NON_LINKED_TASKS_ID);
 }
 function showProjectListDiv(){
     hideModalDiv();
     hideContentDiv();
     fetchProjects();
-    document.getElementById("project-list-div").style.display = "block";
+    showElementById(PROJECT_LIST_ID);
 }
 function showProjectDiv(){
     hideModalDiv();
     hideContentDiv();
     showProjectTasks();
-    document.getElementById("project-div").style.display = "block";
-    document.getElementById('project-name').innerHTML = getCurrentProjectName();
+    showElementById(PROJECT_DIV_ID);
+    setInnerHtml('project-name', getCurrentProjectName());
 }
 
 
 // Show Hide Project Content
-let projectContentDiv = ["project-div-content-create-task","project-div-content-create-team","project-div-content-add-member","project-div-content-tasks","project-div-content-teams","project-div-content-members"]
+let projectContentDiv = [CREATE_PROJECT_TASK_ID, CREATE_PROJECT_TEAM_ID, ADD_PROJECT_MEMBER_ID, PROJECT_TASK_ID, PROJECT_TASK_ID, PROJECT_MEMBERS_ID]
 function hideProjectContentDiv(){
     for(let i = 0; i<projectContentDiv.length;i++){
-        document.getElementById(projectContentDiv[i]).style.display="none";
+        hideElementById(projectContentDiv[i]);
     }
 }
 function showProjectCreateTasksDiv(){
     hideProjectContentDiv();
-    document.getElementById("project-div-content-create-task").style.display = "block"; 
+    showElementById(CREATE_PROJECT_TASK_ID); 
 }
 function showProjectCreateTeamDiv(){
     hideProjectContentDiv();
-    document.getElementById("project-div-content-create-team").style.display = "block"; 
+    showElementById(CREATE_PROJECT_TEAM_ID); 
 }
 function showProjectCreateAddMember(){
     hideProjectContentDiv();
-    document.getElementById("project-div-content-add-member").style.display = "block"; 
+    showElementById(ADD_PROJECT_MEMBER_ID); 
 }
 function showProjectTasks(){
     hideProjectContentDiv();
     fetchTasksOfProject();
     showProjectBacklogTasksDiv();
-    document.getElementById("project-div-content-tasks").style.display = "block"; 
+    showElementById(PROJECT_TASK_ID); 
 }
 function showProjectTeams(){
     hideProjectContentDiv();
     fetchTeamsOfProject();
-    document.getElementById("project-div-content-teams").style.display = "block"; 
+    showElementById(PROJECT_TASK_ID); 
 }
 function showProjectMembers(){
     hideProjectContentDiv();
     fetchMembersOfProject();
-    document.getElementById("project-div-content-members").style.display = "block"; 
+    showElementById(PROJECT_MEMBERS_ID); 
 }
 
-let projectTasksDiv = ["project-div-content-tasks-backlog-list","project-div-content-tasks-assigned-list","project-div-content-tasks-unassigned-list","project-div-content-tasks-completed-list"];
+let projectTasksDiv = [BACKLOG_TASK_DIV_ID, ASSIGNED_TASK_DIV_ID, UNASSIGNED_TASK_DIV_ID, COMPLETED_TASK_DIV_ID];
 function hideAllProjectTaskDiv(){
     for(let i = 0; i<projectTasksDiv.length;i++){
-        document.getElementById(projectTasksDiv[i]).style.display="none";
+        hideElementById(projectTasksDiv[i]);
     }
 }
 function showProjectBacklogTasksDiv(){
     hideAllProjectTaskDiv();
-    document.getElementById("project-div-content-tasks-backlog-list").style.display = "block"; 
+    showElementById(BACKLOG_TASK_DIV_ID); 
 }
 function showProjectAssignedTasksDiv(){
     hideAllProjectTaskDiv();
-    document.getElementById("project-div-content-tasks-assigned-list").style.display = "block"; 
+    showElementById(ASSIGNED_TASK_DIV_ID); 
 }
 function showProjectUnassignedTasksDiv(){
     hideAllProjectTaskDiv();
-    document.getElementById("project-div-content-tasks-unassigned-list").style.display = "block"; 
+    showElementById(UNASSIGNED_TASK_DIV_ID); 
 }
 function showProjectCompletedTasksDiv(){
     hideAllProjectTaskDiv();
-    document.getElementById("project-div-content-tasks-completed-list").style.display = "block"; 
+    showElementById(COMPLETED_TASK_DIV_ID); 
 }
 
 ///////////
@@ -102,53 +102,53 @@ function showProjectTasksDetailDiv(e){
     }else if (e==3){
         fetchCurrentCompletedTaskInformation();
     }
-    document.getElementById("project-div-content-tasks-selected-detail").style.display = "block"; 
+    showElementById(TASK_DETAIL_DIV); 
 }
 function hideProjectTasksDetailDiv(){
-    document.getElementById("project-div-content-tasks-selected-detail").style.display = "none"; 
+    hideElementById(TASK_DETAIL_DIV); 
 }
 
 // Show Hide Modals
 
-let modalDivs = ["create-non-linked-task","edit-non-linked-task","notify-non-linked-task","create-team","create-project"];
+let modalDivs = [CREATE_NON_LINKED_TASK_MODAL, EDIT_NON_LINKED_TASK_MODAL, NOTIFY_NON_LINKED_TASK_MODAL, CREATE_TEAM_MODAL, CREATE_PROJECT_MODAL];
 
 function hideModalDiv(){
     for(let i=0;i<modalDivs.length;i++){
-        document.getElementById(modalDivs[i]).style.display="none";
+        hideElementById(modalDivs[i]);
     }
 }
 function showCreateNonLinkedTasksModal(){
-    document.getElementById("create-non-linked-task").style.display="block";
+    showElementById(CREATE_NON_LINKED_TASK_MODAL);
 }
 function hideCreateNonLinkedTasksModal(){
-    document.getElementById("create-non-linked-task").style.display="none";
+    hideElementById(CREATE_NON_LINKED_TASK_MODAL);
 }
 
 function showEditNonLinkedTasksModal(){
-    document.getElementById("edit-non-linked-task").style.display="block";
+    showElementById(EDIT_NON_LINKED_TASK_MODAL);
 }
 function hideEditNonLinkedTasksModal(){
-    document.getElementById("edit-non-linked-task").style.display="none";
+    hideElementById(EDIT_NON_LINKED_TASK_MODAL);
 }
 
 
 function showNotifyNonLinkedTasksModal(){
-    document.getElementById("notify-non-linked-task").style.display="block";
+    showElementById(NOTIFY_NON_LINKED_TASK_MODAL);
 }
 function hideNotifyNonLinkedTasksModal(){
-    document.getElementById("notify-non-linked-task").style.display="none";
+    hideElementById(NOTIFY_NON_LINKED_TASK_MODAL);
 }
 
 function showCreateTeamModal(){
-    document.getElementById("create-team").style.display="block";
+    showElementById(CREATE_TEAM_MODAL);
 }
 function hideCreateTeamModal(){
-    document.getElementById("create-team").style.display="none";
+    hideElementById(CREATE_TEAM_MODAL);
 }
 
 function showCreateProjectModal(){
-    document.getElementById("create-project").style.display="block";
+    showElementById(CREATE_PROJECT_MODAL);
 }
 function hideCreateProjectModal(){
-    document.getElementById("create-project").style.display="none";
+    hideElementById(CREATE_PROJECT_MODAL);
 }

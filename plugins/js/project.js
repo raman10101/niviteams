@@ -30,11 +30,12 @@ function getProjectMemberInfoById(id) {
         }
     }
 }
+//---------------------------------------------------------------
 function fetchProjects() {
     //Fetch All the projects of the id and store it in project-list-div
     let user_id = getUserId();
     $.ajax({
-        url: "http://appnivi.com/niviteams/server/v1/project/fetchProjects ",
+        url: "http://appnivi.com/niviteams/server/v1/project/fetchProjects",
         type: 'post',
         data: {
             userid: user_id
@@ -42,24 +43,29 @@ function fetchProjects() {
         success: function (data) {
             console.log(data);
             let project_list = data["projects"];
+            setJSONLocalStorageInfo(PROJECT_LIST, data["projects"]);
             let project_list_div = document.getElementById("project-list-div");
             project_list_div.innerHTML = "";
+            if(project_list.length>0){
             for (let i = 0; i < project_list.length; i++) {
                 let boxDiv = document.createElement("div");
                 boxDiv.setAttribute("class", "project-list-box");
                 boxDiv.addEventListener('click', function () {
-                    localStorage.setItem("current-project-id", project_list[i].project_id);
-                    localStorage.setItem("current-project",JSON.stringify(project_list[i]));
+                    setLocalStorageInfo(CURR_PROJECT_ID, project_list[i]['project'].project_id);
+                    setJSONLocalStorageInfo(CURR_PROJECT, project_list[i]);
+                    setJSONLocalStorageInfo(CURR_PROJECT_MEMBERS, project_list[i]['project'].project_members);
                     showProjectDiv();
-                    fetchMembersOfProject();
+                    getElementById('project-name').innerHTML = project_list[i]['project'].project_name;
+                    // fetchMembersOfProject();
                 });
                 let namediv = document.createElement('div');
                 let descdiv = document.createElement('div');
-                namediv.innerHTML= project_list[i].project_name;
-                descdiv.innerHTML= project_list[i].project_description;
+                namediv.innerHTML= project_list[i]['project'].project_name;
+                descdiv.innerHTML= project_list[i]['project'].project_description;
                 boxDiv.appendChild(namediv);
                 boxDiv.appendChild(descdiv);
                 project_list_div.appendChild(boxDiv);
+            }
             }
 
         },
@@ -75,7 +81,7 @@ function createProject() {
     let project_name = document.getElementById("project-name-input").value;
     let project_description = document.getElementById("project-description-input").value;
     $.ajax({
-        url: "http://appnivi.com/niviteams/server/v1/project/createProject ",
+        url: "http://appnivi.com/niviteams/server/v1/project/createProject",
         type: 'post',
         data: {
             userid: user_id,
@@ -92,6 +98,7 @@ function createProject() {
         }
     });
 }
+
 function createTaskInProject() {
 
     let user_id = getUserId();
@@ -144,8 +151,8 @@ function createTeamInProject() {
 }
 function addMemberToProject() {
 
-    let project_id = getProjectId();
-    let user_id = getUserId();
+    let project_id = getLocalStorageInfo(CURR_PROJECT_ID);
+    let user_id = getJSONLocalStorageInfo("apiResponse").user.user_id;
     let member_name = document.getElementById("project-team-add-member-name-input").value;
     let member_mail = document.getElementById("project-team-add-member-email-input").value;
 
@@ -168,28 +175,30 @@ function addMemberToProject() {
     });
 }
 function fetchTasksOfProject() {
-    let user_id = getUserId();
-    let project_id = getProjectId();
-    $.ajax({
-        url: "http://appnivi.com/niviteams/server/v1/project/fetchTasksOfProject ",
-        type: 'post',
-        data: {
-            userid: user_id,
-            projectid: project_id,
-        },
-        success: function (data) {
-            console.log(data)
-            let backlogDiv = document.getElementById("project-div-content-tasks-backlog-list");
+    let curr_project = getJSONLocalStorageInfo(CURR_PROJECT);
+    setJSONLocalStorageInfo(CURR_PROJECT_TASKS, curr_project['project']['project_tasks']);
+    
+    // let user_id = getUserId();
+    // let project_id = getProjectId();
+    // $.ajax({
+    //     url: "http://appnivi.com/niviteams/server/v1/project/fetchTasksOfProject ",
+    //     type: 'post',
+    //     data: {
+    //         userid: user_id,
+    //         projectid: project_id,
+    //     },
+    //     success: function (data) {
+    //         console.log(data)
+            let backlogDiv = getElementById(BACKLOG_TASK_DIV_ID);
             backlogDiv.innerHTML = "";
-            let AssignedDiv = document.getElementById("project-div-content-tasks-assigned-list");
+            let AssignedDiv = getElementById(ASSIGNED_TASK_DIV_ID);
             AssignedDiv.innerHTML = "";
-            let UnassignedDiv = document.getElementById("project-div-content-tasks-unassigned-list");
+            let UnassignedDiv = getElementById(UNASSIGNED_TASK_DIV_ID);
             UnassignedDiv.innerHTML = "";
-            let completedDiv = document.getElementById("project-div-content-tasks-completed-list");
+            let completedDiv = getElementById(COMPLETED_TASK_DIV_ID);
             completedDiv.innerHTML = "";
-            if (data["error"] == false) {
-                localStorage.setItem(PROJECT_TASKS, JSON.stringify(data.project_tasks));
-                let project_tasks = data["project_tasks"]
+            // if (data["error"] == false) {
+                let project_tasks = getJSONLocalStorageInfo(CURR_PROJECT_TASKS);
 
                 // let assignedDiv = document.getElementById();
                 for (let i = 0; i < project_tasks.length; i++) {
@@ -198,8 +207,9 @@ function fetchTasksOfProject() {
                         projectTaskBoxDiv.setAttribute("class", "project-task-box");
                         projectTaskBoxDiv.textContent = project_tasks[i].task_name;
                         projectTaskBoxDiv.addEventListener('click', function () {
+                            setLocalStorageInfo(CURR_TASK_ID, project_tasks[i].task_id);
+                            setJSONLocalStorageInfo(CURR_TASK, project_tasks[i]);
                             console.log(project_tasks[i].task_id);
-                            setCurrentTaskId(project_tasks[i].task_id);
                             showProjectTasksDetailDiv(0);
                         });
                         backlogDiv.appendChild(projectTaskBoxDiv);
@@ -210,7 +220,8 @@ function fetchTasksOfProject() {
                         projectTaskBoxDiv.textContent = project_tasks[i].task_name;
                         projectTaskBoxDiv.addEventListener('click', function () {
                             console.log(project_tasks[i].task_id);
-                            setCurrentTaskId(project_tasks[i].task_id);
+                            setLocalStorageInfo(CURR_TASK_ID, project_tasks[i].task_id);
+                            setJSONLocalStorageInfo(CURR_TASK, project_tasks[i]);
                             showProjectTasksDetailDiv(1);
                         });
                         AssignedDiv.appendChild(projectTaskBoxDiv);
@@ -221,7 +232,8 @@ function fetchTasksOfProject() {
                         projectTaskBoxDiv.textContent = project_tasks[i].task_name;
                         projectTaskBoxDiv.addEventListener('click', function () {
                             console.log(project_tasks[i].task_id);
-                            setCurrentTaskId(project_tasks[i].task_id);
+                            setLocalStorageInfo(CURR_TASK_ID, project_tasks[i].task_id);
+                            setJSONLocalStorageInfo(CURR_TASK, project_tasks[i]);
                             showProjectTasksDetailDiv(2);
                         });
                         UnassignedDiv.appendChild(projectTaskBoxDiv);
@@ -232,19 +244,20 @@ function fetchTasksOfProject() {
                         projectTaskBoxDiv.textContent = project_tasks[i].task_name;
                         projectTaskBoxDiv.addEventListener('click', function () {
                             console.log(project_tasks[i].task_id);
-                            setCurrentTaskId(project_tasks[i].task_id);
+                            setLocalStorageInfo(CURR_TASK_ID, project_tasks[i].task_id);
+                            setJSONLocalStorageInfo(CURR_TASK, project_tasks[i]);
                             showProjectTasksDetailDiv(3);
                         });
                         completedDiv.appendChild(projectTaskBoxDiv);
                     }
                 }
-            }
+            // }
 
-        },
-        error: function (xhr) {
-            console.log(xhr);
-        }
-    });
+    //     },
+    //     error: function (xhr) {
+    //         console.log(xhr);
+    //     }
+    // });
 }
 
 function fetchTeamsOfProject() {
@@ -279,69 +292,70 @@ function fetchTeamsOfProject() {
     });
 }
 
-function fetchMembersOfProject() {
-    let user_id = getUserId();
-    let project_id = getProjectId();
-    $.ajax({
-        url: "http://appnivi.com/niviteams/server/v1/project/fetchMembersOfProject ",
-        type: 'post',
-        data: {
-            userid: user_id,
-            projectid: project_id,
-        },
-        success: function (data) {
-            console.log(data);
-            if (data['error'] == false) {
-                localStorage.setItem(PROJECT_MEMBERS, JSON.stringify(data.project_members));
-                let projectMemberDiv = document.getElementById("project-div-content-members");
-                let members = data["project_members"];
-                projectMemberDiv.innerHTML = "";
-                for (let i = 0; i < members.length; i++) {
-                    let projectMemberBoxDiv = document.createElement("div");
-                    projectMemberBoxDiv.setAttribute("class", "project-member-box");
-                    projectMemberBoxDiv.textContent = members[i].member_id;
-                    projectMemberBoxDiv.addEventListener('click', function () {
-                        console.log(members[i].member_id);
-                    });
-                    projectMemberDiv.appendChild(projectMemberBoxDiv);
-                }
-            }
-        },
-        error: function (xhr) {
-            console.log(xhr);
-        }
-    });
-}
-function fetchCommentsOfTask(){
-    let taskId = getCurrentTaskId();
-    $.ajax({
-        url: "http://appnivi.com/niviteams/server/v1/Comment/fetchCommentsOfTask ",
-        type: 'post',
-        data: {
-            userid: getUserId(),
-            taskid: taskId,
-            projectid: getProjectId()
-        },
-        success: function (data) {
-            console.log("Cooments Fetched");
-            console.log(data);
-            if (data["error"] == false){
-            let comments = data.comment;
-            console.log(comments);
-            return comments;
-            }
-        },
-        error: function (xhr) {
-            console.log(xhr);
-        }
-    });
-}
+// function fetchMembersOfProject() {
+//     let user_id = getUserId();
+//     let project_id = getProjectId();
+//     $.ajax({
+//         url: "http://appnivi.com/niviteams/server/v1/project/fetchMembersOfProject ",
+//         type: 'post',
+//         data: {
+//             userid: user_id,
+//             projectid: project_id,
+//         },
+//         success: function (data) {
+//             console.log(data);
+//             if (data['error'] == false) {
+//                 localStorage.setItem(PROJECT_MEMBERS, JSON.stringify(data.project_members));
+//                 let projectMemberDiv = document.getElementById("project-div-content-members");
+//                 let members = data["project_members"];
+//                 projectMemberDiv.innerHTML = "";
+//                 for (let i = 0; i < members.length; i++) {
+//                     let projectMemberBoxDiv = document.createElement("div");
+//                     projectMemberBoxDiv.setAttribute("class", "project-member-box");
+//                     projectMemberBoxDiv.textContent = members[i].member_id;
+//                     projectMemberBoxDiv.addEventListener('click', function () {
+//                         console.log(members[i].member_id);
+//                     });
+//                     projectMemberDiv.appendChild(projectMemberBoxDiv);
+//                 }
+//             }
+//         },
+//         error: function (xhr) {
+//             console.log(xhr);
+//         }
+//     });
+// }
+// function fetchCommentsOfTask(){
+//     let taskId = getCurrentTaskId();
+//     $.ajax({
+//         url: "http://appnivi.com/niviteams/server/v1/Comment/fetchCommentsOfTask ",
+//         type: 'post',
+//         data: {
+//             userid: getUserId(),
+//             taskid: taskId,
+//             projectid: getProjectId()
+//         },
+//         success: function (data) {
+//             console.log("Cooments Fetched");
+//             console.log(data);
+//             if (data["error"] == false){
+//             let comments = data.comment;
+//             console.log(comments);
+//             return comments;
+//             }
+//         },
+//         error: function (xhr) {
+//             console.log(xhr);
+//         }
+//     });
+// }
 
 function fetchCurrentBacklogTaskInformation() {
-    let taskId = getCurrentTaskId();
-    let parentElem = document.getElementById("project-div-content-tasks-selected-detail");
+    // let taskId = getCurrentTaskId();
+    let parentElem = getElementById(TASK_DETAIL_DIV);
     parentElem.innerHTML = "";
-    let currentProjectTask = getProjectTaskInfoById(taskId);
+    // let currentProjectTask = getProjectTaskInfoById(taskId);
+    let currentProjectTask = getJSONLocalStorageInfo(CURR_TASK);
     let div1 = document.createElement("div");
     let div2 = document.createElement("div");
     div1.textContent = currentProjectTask.task_name;
@@ -357,7 +371,7 @@ function fetchCurrentBacklogTaskInformation() {
     opt.value = 0;
     opt.innerHTML = "No member selected";
     divSelect.appendChild(opt);
-    let members = JSON.parse(localStorage.getItem(PROJECT_MEMBERS));
+    let members =getJSONLocalStorageInfo(CURR_PROJECT_MEMBERS);
     for (let i = 0; i < members.length; i++) {
         let opt = document.createElement("option");
         opt.id = members[i].member_id;
@@ -395,25 +409,21 @@ function fetchCurrentBacklogTaskInformation() {
     commentDiv.appendChild(commentInput);
     commentDiv.appendChild(commentButton);
     commentButton.addEventListener('click', function(){
-
+        
         addCommentToProjectTask();
     });
     parentElem.appendChild(commentDiv);
-
-
-    
-   
 
     let conversationsDiv = document.createElement('div');
     conversationsDiv.setAttribute('class', 'conversations-box');
 
 
     ///FetchCommentsOfTask
-    let comments= fetchCommentsOfTask(); 
+    let comments= getJSONLocalStorageInfo(CURR_TASK).comments; 
     for(let i=0;i<comments.length;i++){
         let singleCommentDiv = document.createElement('div');
-        singleCommentDiv.setAttribute('class',coversation-single-box);
-        singleCommentDiv.textContent(comments[i].comment_text); 
+        singleCommentDiv.setAttribute('class', 'coversation-single-box');
+        singleCommentDiv.textContent = comments[i].comment_text; 
         conversationsDiv.appendChild(singleCommentDiv);
     }
     parentElem.appendChild(conversationsDiv);
@@ -421,10 +431,11 @@ function fetchCurrentBacklogTaskInformation() {
 }
 
 function fetchCurrentAssignedTaskInformation() {
-    let taskId = getCurrentTaskId();
-    let parentElem = document.getElementById("project-div-content-tasks-selected-detail");
+    // let taskId = getCurrentTaskId();
+    let parentElem = getElementById(TASK_DETAIL_DIV);
     parentElem.innerHTML = "";
-    let currentProjectTask = getProjectTaskInfoById(taskId);
+    let currentProjectTask = getJSONLocalStorageInfo(CURR_TASK);
+    // let currentProjectTask = getProjectTaskInfoById(taskId);
     let div1 = document.createElement("div");
     let div2 = document.createElement("div");
     div1.textContent = currentProjectTask.task_name;
@@ -471,13 +482,28 @@ function fetchCurrentAssignedTaskInformation() {
         addCommentToProjectTask();
     });
 
+    let conversationsDiv = document.createElement('div');
+    conversationsDiv.setAttribute('class', 'conversations-box');
+
+
+    ///FetchCommentsOfTask
+    let comments= getJSONLocalStorageInfo(CURR_TASK).comments; 
+    for(let i=0;i<comments.length;i++){
+        let singleCommentDiv = document.createElement('div');
+        singleCommentDiv.setAttribute('class', 'coversation-single-box');
+        singleCommentDiv.textContent = comments[i].comment_text; 
+        conversationsDiv.appendChild(singleCommentDiv);
+    }
+    parentElem.appendChild(conversationsDiv);
+
 }
 
 function fetchCurrentUnassignedTaskInformation() {
-    let taskId = getCurrentTaskId();
-    let parentElem = document.getElementById("project-div-content-tasks-selected-detail");
+    // let taskId = getCurrentTaskId();
+    let parentElem = getElementById(TASK_DETAIL_DIV);
     parentElem.innerHTML = "";
-    let currentProjectTask = getProjectTaskInfoById(taskId);
+    let currentProjectTask = getJSONLocalStorageInfo(CURR_TASK);
+    // let currentProjectTask = getProjectTaskInfoById(taskId);
     let div1 = document.createElement("div");
     let div2 = document.createElement("div");
     div1.textContent = currentProjectTask.task_name;
@@ -493,7 +519,7 @@ function fetchCurrentUnassignedTaskInformation() {
     opt.value = 0;
     opt.innerHTML = "No member selected";
     divSelect.appendChild(opt);
-    let members = JSON.parse(localStorage.getItem(PROJECT_MEMBERS));
+    let members = getJSONLocalStorageInfo(CURR_PROJECT_MEMBERS);
     for (let i = 0; i < members.length; i++) {
         let opt = document.createElement("option");
         opt.id = members[i].member_id;
@@ -531,13 +557,28 @@ function fetchCurrentUnassignedTaskInformation() {
     commentButton.addEventListener('click', function(){
         addCommentToProjectTask();
     });
+
+    let conversationsDiv = document.createElement('div');
+    conversationsDiv.setAttribute('class', 'conversations-box');
+
+
+    ///FetchCommentsOfTask
+    let comments= getJSONLocalStorageInfo(CURR_TASK).comments; 
+    for(let i=0;i<comments.length;i++){
+        let singleCommentDiv = document.createElement('div');
+        singleCommentDiv.setAttribute('class', 'coversation-single-box');
+        singleCommentDiv.textContent = comments[i].comment_text; 
+        conversationsDiv.appendChild(singleCommentDiv);
+    }
+    parentElem.appendChild(conversationsDiv);
 }
 
 function fetchCurrentCompletedTaskInformation() {
-    let taskId = getCurrentTaskId();
-    let parentElem = document.getElementById("project-div-content-tasks-selected-detail");
+    // let taskId = getCurrentTaskId();
+    let parentElem = getElementById(TASK_DETAIL_DIV);
     parentElem.innerHTML = "";
-    let currentProjectTask = getProjectTaskInfoById(taskId);
+    let currentProjectTask = getJSONLocalStorageInfo(CURR_TASK);
+    // let currentProjectTask = getProjectTaskInfoById(taskId);
     let div1 = document.createElement("div");
     let div2 = document.createElement("div");
     div1.textContent = currentProjectTask.task_name;
@@ -546,7 +587,7 @@ function fetchCurrentCompletedTaskInformation() {
     parentElem.appendChild(div1);
     parentElem.appendChild(div2);
 
-    if(getUserId() == currentProjectTask.user_id){
+    if(getJSONLocalStorageInfo("apiResponse").user.user_id == currentProjectTask.user_id){
         let btn = document.createElement("button");
     btn.innerHTML = "Delete";
     btn.addEventListener('click', function () {
@@ -568,16 +609,32 @@ function fetchCurrentCompletedTaskInformation() {
     commentButton.addEventListener('click', function(){
         addCommentToProjectTask();
     });
+
+    let conversationsDiv = document.createElement('div');
+    conversationsDiv.setAttribute('class', 'conversations-box');
+
+
+    ///FetchCommentsOfTask
+    let comments= getJSONLocalStorageInfo(CURR_TASK).comments; 
+    for(let i=0;i<comments.length;i++){
+        let singleCommentDiv = document.createElement('div');
+        singleCommentDiv.setAttribute('class', 'coversation-single-box');
+        singleCommentDiv.textContent = comments[i].comment_text; 
+        conversationsDiv.appendChild(singleCommentDiv);
+    }
+    parentElem.appendChild(conversationsDiv);
+
+
 }
 
 
 
 function assignProjectTaskToMember() {
     let select = document.getElementById("member_dropdown");
-    let taskId = getCurrentTaskId();
+    let taskId = getLocalStorageInfo(CURR_TASK_ID);
     let memberId = select.options[select.selectedIndex].value;
-    let projectId = getProjectId();
-    let user_id = getUserId();
+    let projectId = getLocalStorageInfo(CURR_PROJECT_ID);
+    let user_id = getJSONLocalStorageInfo("apiResponse").user.user_id;
     console.log(taskId);
     console.log(memberId);
     $.ajax({
@@ -600,10 +657,11 @@ function assignProjectTaskToMember() {
     });
 }
 
+
 function completeProjectTaskOfMember() {
-    let taskId = getCurrentTaskId();
-    let user_id = getUserId();
-    let projectId = getProjectId();
+    let taskId = getLocalStorageInfo(CURR_TASK_ID);
+    let user_id = getJSONLocalStorageInfo("apiResponse").user.user_id;
+    let projectId = getLocalStorageInfo(CURR_PROJECT_ID);
     $.ajax({
         url: "http://appnivi.com/niviteams/server/v1/project/projectTaskComplete ",
         type: 'post',
@@ -624,9 +682,9 @@ function completeProjectTaskOfMember() {
 }
 
 function unassignProjectTaskOfMember(){
-    let taskId = getCurrentTaskId();
-    let user_id = getUserId();
-    let projectId = getProjectId();
+    let taskId = getLocalStorageInfo(CURR_TASK_ID);
+    let user_id = getJSONLocalStorageInfo("apiResponse").user.user_id;
+    let projectId = getLocalStorageInfo(CURR_PROJECT_ID);
     $.ajax({
         url: "http://appnivi.com/niviteams/server/v1/project/unassignProjectTaskToMember ",
         type: 'post',
@@ -647,9 +705,9 @@ function unassignProjectTaskOfMember(){
 }
 
 function deleteProjectTask(){
-    let taskId = getCurrentTaskId();
-    let user_id = getUserId();
-    let projectId = getProjectId();
+    let taskId = getLocalStorageInfo(CURR_TASK_ID);
+    let user_id = getJSONLocalStorageInfo("apiResponse").user.user_id;
+    let projectId = getLocalStorageInfo(CURR_PROJECT_ID);
     $.ajax({
         url: "http://appnivi.com/niviteams/server/v1/project/projectTaskDelete ",
         type: 'post',
@@ -671,12 +729,17 @@ function deleteProjectTask(){
 }
 
 function addCommentToProjectTask(){
-    let taskId = getCurrentTaskId();
-    let user_id = getUserId();
-    let projectId = getProjectId();
-    let message = document.getElementById('comment_message').value;
+    let task = getJSONLocalStorageInfo(CURR_TASK);
+    console.log(task);
+    let commlist =task.comments;
+    console.log(commlist);
+    setJSONLocalStorageInfo(CURR_COMMENT_LIST, commlist);
+    let taskId = getLocalStorageInfo(CURR_TASK_ID);
+    let user_id = getJSONLocalStorageInfo("apiResponse").user.user_id;
+    let projectId = getLocalStorageInfo(CURR_PROJECT_ID);
+    let message = getElementById('comment_message').value;
     $.ajax({
-        url: "http://appnivi.com/niviteams/server/v1/Comment/addComment ",
+        url: "http://appnivi.com/niviteams/server/v1/Comment/addComment",
         type: 'post',
         data: {
             userid: user_id,
@@ -687,7 +750,11 @@ function addCommentToProjectTask(){
         success: function (data) {
             console.log(data);
             if (data['error'] == false)
-                showProjectTasks();
+            {
+                commlist.push(data['comment']);
+                setJSONLocalStorageInfo(CURR_COMMENT_LIST, commlist);
+                console.log(getJSONLocalStorageInfo(CURR_COMMENT_LIST));
+            }
         },
         error: function (xhr) {
             console.log(xhr);
