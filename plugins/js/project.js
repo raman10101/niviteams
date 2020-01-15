@@ -292,39 +292,24 @@ function fetchTeamsOfProject() {
     });
 }
 
-// function fetchMembersOfProject() {
-//     let user_id = getUserId();
-//     let project_id = getProjectId();
-//     $.ajax({
-//         url: "http://appnivi.com/niviteams/server/v1/project/fetchMembersOfProject ",
-//         type: 'post',
-//         data: {
-//             userid: user_id,
-//             projectid: project_id,
-//         },
-//         success: function (data) {
-//             console.log(data);
-//             if (data['error'] == false) {
-//                 localStorage.setItem(PROJECT_MEMBERS, JSON.stringify(data.project_members));
-//                 let projectMemberDiv = document.getElementById("project-div-content-members");
-//                 let members = data["project_members"];
-//                 projectMemberDiv.innerHTML = "";
-//                 for (let i = 0; i < members.length; i++) {
-//                     let projectMemberBoxDiv = document.createElement("div");
-//                     projectMemberBoxDiv.setAttribute("class", "project-member-box");
-//                     projectMemberBoxDiv.textContent = members[i].member_id;
-//                     projectMemberBoxDiv.addEventListener('click', function () {
-//                         console.log(members[i].member_id);
-//                     });
-//                     projectMemberDiv.appendChild(projectMemberBoxDiv);
-//                 }
-//             }
-//         },
-//         error: function (xhr) {
-//             console.log(xhr);
-//         }
-//     });
-// }
+function fetchMembersOfProject() {
+    let user_id = getUserId();
+    let project_id = getProjectId();
+
+                let projectMemberDiv = document.getElementById("project-div-content-members");
+                let members = getJSONLocalStorageInfo(CURR_PROJECT_MEMBERS);
+                projectMemberDiv.innerHTML = "";
+                for (let i = 0; i < members.length; i++) {
+                    let projectMemberBoxDiv = document.createElement("div");
+                    projectMemberBoxDiv.setAttribute("class", "project-member-box");
+                    projectMemberBoxDiv.textContent = members[i].member_id;
+                    projectMemberBoxDiv.addEventListener('click', function () {
+                        console.log(members[i].member_id);
+                    });
+                    projectMemberDiv.appendChild(projectMemberBoxDiv);
+                }
+}
+
 // function fetchCommentsOfTask(){
 //     let taskId = getCurrentTaskId();
 //     $.ajax({
