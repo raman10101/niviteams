@@ -2,7 +2,7 @@
     display:none;
     width:600px;
     height:500px;
-    border:1px solid black;
+    /* border:1px solid black; */
     position:absolute;
     margin:auto;
     left:0;
@@ -10,7 +10,30 @@
     top:0;
     bottom:0;
     background-color: rgb(255,255,255);
-    z-index:3;
+    box-shadow: 1px 2px 4px #aaa;
+    z-index:4;
+}
+#create-non-linked-task table{
+    /* border: 1px solid black; */
+    margin-top: 30px;
+    width: 75%;
+    margin-left: 12%;
+}
+#create-non-linked-task td:nth-of-type(1){
+    /* border: 1px solid black; */
+    text-align: left;
+    padding-left: 30px;
+    width: 30%;
+}
+#create-non-linked-task table td:nth-of-type(2){
+    /* border: 1px solid black; */
+    width: 70%;
+}
+#create-non-linked-task table td input{
+    height: 100%;
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid #333;
 }
 #edit-non-linked-task{
     display:none;
@@ -44,7 +67,7 @@
     display:none;
     width:600px;
     height:500px;
-    border:1px solid black;
+    /* border:1px solid black; */
     position:absolute;
     margin:auto;
     left:0;
@@ -52,13 +75,37 @@
     top:0;
     bottom:0;
     background-color: rgb(255,255,255);
-    z-index:3;
+    box-shadow: 1px 2px 4px #aaa;
+    z-index:4;
+}
+#create-team table{
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+    width: 75%;
+    margin-top: 30px;
+    margin-left: 12%;
+}
+#create-team table td:nth-of-type(1){
+    /* border: 1px solid black; */
+    text-align: left;
+    padding-left: 30px;
+    width: 40%;
+}
+#create-team table td:nth-of-type(2){
+    /* border: 1px solid black; */
+    width: 60%;
+}
+#create-team table td input{
+    height: 100%;
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid #333;
 }
 #create-project{
     display:none;
     width:600px;
     height:500px;
-    border:1px solid black;
+    /* border:1px solid black; */
     position:absolute;
     margin:auto;
     left:0;
@@ -66,5 +113,86 @@
     top:0;
     bottom:0;
     background-color: rgb(255,255,255);
-    z-index:3;
+    z-index:4;
+    box-shadow: 1px 2px 4px #aaa;
+}
+#create-project table{
+    /* border: 1px solid black; */
+    width: 75%;
+    margin-top: 30px;
+    margin-left: 12%;
+}
+#create-project table td:nth-of-type(1){
+    /* border: 1px solid black; */
+    text-align: left;
+    padding-left: 30px;
+    width: 30%;
+}
+#create-project table td:nth-of-type(2){
+    /* border: 1px solid black; */
+    width: 70%;
+}
+#create-project table td input{
+    height: 100%;
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid #333;
+}
+
+.close-btn{
+    /* border: 1px solid black; */
+    position: absolute;
+    color: #333;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 25px;
+    font-size: 22px !important;
+    line-height: 30px !important;
+    padding-left: 10px;
+}
+
+.close-btn:hover{
+    cursor: pointer;
+    color: blue;
+}
+
+.modal-details{
+    /* border: 1px solid black; */
+}
+
+.modal-details img{
+    margin-top: 20px;
+    /* border: 1px solid black; */
+    height: 200px;
+    width: 200px;
+}
+.modal-details p{
+    /* border: 1px solid black; */
+    padding: 0px 30px;
+    font-size: 14px;
+}
+.modal-action-btn-div{
+    position: absolute;
+    /* border: 1px solid black; */
+    bottom: 20px;
+    width: 100%;
+    height: 40px;
+}
+.modal-action-btn{
+    position: absolute;
+    left:0;
+    right:0;
+    margin: auto;
+    height: 100%;
+    background-color: #5c2be2;
+    padding: 0px 20px;
+    border-radius: 3px;
+    color: white;
+    border: none;
+    /* border: 1px solid black; */
+}
+.modal-action-btn:hover{
+    cursor: pointer;
+    background-color: #431eaa;
 }

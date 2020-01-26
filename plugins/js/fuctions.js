@@ -29,3 +29,7 @@ function getElementById(id){
 function setInnerHtml(id, html_content){
     getElementById(id).innerHTML = html_content;
 }
+
+function init(){
+    getElementById("user-name-span").innerHTML = "Hi "+ getJSONLocalStorageInfo("apiResponse").user.name + "!";
+}

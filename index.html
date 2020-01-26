@@ -1,415 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>NiviTeams</title>
-    <link rel="stylesheet" href="plugins/css/index.css" />
-    <link rel="stylesheet" href="plugins/css/sidebar.css" />
-    <link rel="stylesheet" href="plugins/css/content.css" />
-    <link rel="stylesheet" href="plugins/css/modals.css" />
-    <link
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous"
-    />
-    <!-- jquery cdn -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      if (localStorage.getItem("user") !== "true") {
-        window.location = "login.html";
-      }
-    </script>
-    <script src="plugins/js/constant.js"></script>
-  </head>
-  <body>
-    <div id="header">
-      <span id="nav-icon" onclick="toggleSidebar()"
-        ><i class="fa fa-bars" aria-hidden="true"></i
-      ></span>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>NiviTeams</title>
+  <link rel="stylesheet" href="plugins/css/index.css" />
+  <link rel="stylesheet" href="plugins/css/sidebar.css" />
+  <link rel="stylesheet" href="plugins/css/content.css" />
+  <link rel="stylesheet" href="plugins/css/modals.css" />
+  <link rel="stylesheet" href="plugins/css/intro-page.css">
+  <link rel="stylesheet" href="plugins/css/fonts.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+  <!-- jquery cdn -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>
+    if (localStorage.getItem("user") !== "true") {
+      window.location = "login.html";
+    }
+  </script>
+  <script src="plugins/js/constant.js"></script>
+</head>
+
+<body onload="init()">
+  <div id="header">
+    <span id="nav-icon" onclick="toggleSidebar()"><i class="fa fa-bars" aria-hidden="true"></i></span>
+    <span id="user-name-span">User Name</span>
+
+    <div id="logout-button" onclick="logout()">Logout </div>
+  </div>
+  <div id="side-icon-bar" align="center">
+    <i class="fa fa-home" onclick="showIntroPageDiv();" aria-hidden="true"></i>
+    <i class="fa fa-bookmark" onclick="showIntroPageDiv();" aria-hidden="true"></i>
+    <i class="fa fa-briefcase" onclick="showIntroPageDiv();" aria-hidden="true"></i>
+  </div>
+  <div id="sidebar">
+    <div class="side-item-box">
+      <span onclick="showIntroPageDiv(); toggleSidebar()">Welcome</span>
     </div>
-    <div id="side-icon-bar">
-      <!-- <i class="fa fa-bars" aria-hidden="true"></i> -->
+    <div class="side-item-box">
+      <span onclick="showNonLinkedTaskDiv(); toggleSidebar()">Tasks</span>
     </div>
-    <div id="sidebar">
-      <div class="side-item-box">
-        <span onclick="showIntroPageDiv(); toggleSidebar()">Welocme</span>
-      </div>
-      <div class="side-item-box">
-        <span onclick="showNonLinkedTaskDiv(); toggleSidebar()">Tasks</span>
-      </div>
-      <div class="side-item-box">
-        <span onclick="showProjectListDiv(); toggleSidebar()">Project</span>
-      </div>
+    <div class="side-item-box">
+      <span onclick="showProjectListDiv(); toggleSidebar()">Projects</span>
     </div>
-    <div id="content">
-      <!-- Intro Div -->
-      <div id="intro-page">
-        <div id="intro-center-box">
-          <h2>Welcome To Nivi Teams</h2>
-          <table id="intro-table">
-            <tr>
-              <td>
-                <span onclick="showCreateNonLinkedTasksModal()"
-                  >Create Task</span
-                >
-              </td>
-              <td>
-                <span onclick="showCreateTeamModal()">Create Team</span>
-              </td>
-              <td>
-                <span onclick="showCreateProjectModal()">Create Proj</span>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <!-- Non Linked Task -->
-      <div id="non-linked-tasks">
-        <table id="non-linked-tasks-table">
+  </div>
+  <div id="content">
+    <!-- Intro Div -->
+    <div id="intro-page">
+      <div id="intro-center-box">
+        <h2>Welcome To Nivi Teams</h2>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+          industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book. </p>
+        <table id="intro-table">
           <tr>
-            <td valign="top">
-              <div>
-                To Do
-                <span
-                  style="float:right;"
-                  onclick="showCreateNonLinkedTasksModal()"
-                  ><i class="fa fa-plus"></i
-                ></span>
-              </div>
-              <div id="non-linked-todo-tasks"></div>
+            <td align="center">
+              <img src="plugins/images/task.jpg" alt="" class="intro-img">
+              <h2>TASKS</h2>
+              <p class="intro-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                Ipsum has been the
+                industry's standard dummy text ever since the 1500s</p>
+              <span onclick="showCreateNonLinkedTasksModal()">Create Task</span>
             </td>
-            <td>
-              <!-- <p>In Progress</p>
-              <div class="table-task"></div> -->
+            <td align="center">
+              <img src="plugins/images/project.jpg" alt="" class="intro-img">
+              <h2>TEAMS</h2>
+              <p class="intro-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                Ipsum has been the
+                industry's standard dummy text ever since the 1500s</p>
+              <span onclick="showCreateTeamModal()">Create Team</span>
             </td>
-            <td>
-              <!-- <p>Done</p>
-              <div class="table-task"></div> -->
+            <td align="center">
+              <img src="plugins/images/team.png" alt="" class="intro-img">
+              <h2>PROJECTS</h2>
+              <p class="intro-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                Ipsum has been the
+                industry's standard dummy text ever since the 1500s</p>
+              <span onclick="showCreateProjectModal()">Create Project</span>
             </td>
           </tr>
         </table>
       </div>
-      <div id="project-list-div" class="content-main-div"></div>
-      <div id="project-div">
-        <div id="project-div-left-menu">
-          <div id="project-heading">
-            <span id="project-name">NiviLearn</span>
-          </div>
-          <div id="project-menu-list">
-            <ul>
-              <li onclick="showProjectTasks()">Tasks</li>
-              <li onclick="showProjectTeams()">Teams</li>
-              <li onclick="showProjectMembers()">Members</li>
-            </ul>
-          </div>
+    </div>
+    <!-- Non Linked Task -->
+    <div id="non-linked-tasks">
+      <table id="non-linked-tasks-table">
+        <tr>
+          <td valign="top">
+            <div>
+              To Do
+              <span style="float:right;" onclick="showCreateNonLinkedTasksModal()"><i class="fa fa-plus"></i></span>
+            </div>
+            <div id="non-linked-todo-tasks"></div>
+          </td>
+          <td>
+            <!-- <p>In Progress</p>
+              <div class="table-task"></div> -->
+          </td>
+          <td>
+            <!-- <p>Done</p>
+              <div class="table-task"></div> -->
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id="project-list-div" class="content-main-div">
+      <div id="project-list-div-left"></div>
+      <div id="project-list-div-right">
+        <div id="project-list-div-right-name">Project Name</div>
+        <div id="project-list-div-right-description">Project Description</div>
+        <div id="project-list-div-right-createdon">10 - 10- 2019 00: 12: 00</div>
+
+        <div id="project-list-div-right-file">
+          <input type="file" id="file-input"><button id="file-upload-button"
+            onclick="fileUploadInProject()">Upload</button>
         </div>
-        <div id="project-div-content">
-          <div id="project-div-content-top">
-            <span onclick="showProjectCreateTasksDiv()">Crreate Task</span>
-            <span onclick="showProjectCreateTeamDiv()">Create Team</span>
-            <span onclick="showProjectCreateAddMember()">Add Member</span>
-          </div>
 
-          <div
-            id="project-div-content-create-task"
-            class="content-box"
-            style="background-color: beige;"
-          >
-            <table>
-              <tr>
-                <td>Task Name</td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Task Name"
-                    id="project-task-name-input"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Task Description</td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Task Description"
-                    id="project-task-description-input"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Deadline</td>
-                <td>
-                  <input
-                    type="datetime-local"
-                    name="deadline"
-                    id="project-task-deadline-input"
-                  />
-                </td>
-              </tr>
-            </table>
-
-            <button onclick="createTaskInProject()">
-              Create Task
-            </button>
+        <div id="project-list-div-right-edit-div">
+          <i class="fa fa-close" onclick="hideEditProject()"></i>
+          <input type="text" name="" id="project-name-edit" placeholder="name">
+          <input type="text" name="" id="project-description-edit" placeholder="description">
+          <div id="done-btn" onclick="updateProjectDetails()">
+            Done
           </div>
-          <div id="project-div-content-create-team" class="content-box">
-            <table>
-              <tr>
-                <td>Team Name</td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Team Name"
-                    id="project-team-name-input"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Team Description</td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Team Description"
-                    id="project-team-description-input"
-                  />
-                </td>
-              </tr>
-            </table>
-
-            <button onclick="createTeamInProject()">
-              Create Team
-            </button>
-          </div>
-          <div id="project-div-content-add-member" class="content-box">
-            <table>
-              <tr>
-                <td>Member Name</td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Member Name"
-                    id="project-team-add-member-name-input"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Member Email</td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Member Email"
-                    id="project-team-add-member-email-input"
-                  />
-                </td>
-              </tr>
-            </table>
-
-            <button onclick="addMemberToProject()">
-              Add Member
-            </button>
-          </div>
-          <div id="project-div-content-tasks" class="content-box">
-            <div id="project-div-content-tasks-top">
-              <span onclick="showProjectBacklogTasksDiv()">Backlog</span>
-              <span onclick="showProjectAssignedTasksDiv()">Assigned</span>
-              <span onclick="showProjectUnassignedTasksDiv()">UnAssigned</span>
-              <span onclick="showProjectCompletedTasksDiv()">Completed</span>
-            </div>
-            <div id="project-div-content-tasks-backlog-list"></div>
-            <div id="project-div-content-tasks-assigned-list"></div>
-            <div id="project-div-content-tasks-unassigned-list"></div>
-            <div id="project-div-content-tasks-completed-list"></div>
-            <div id="project-div-content-tasks-selected-detail">
-
-            </div>
-          </div>
-          <div id="project-div-content-teams" class="content-box"></div>
-          <div id="project-div-content-members" class="content-box"></div>
         </div>
       </div>
     </div>
-    <!-- Modals -->
-    <div id="create-non-linked-task">
-      <table>
-        <tr>
-          <td>Task Name</td>
-          <td>
-            <input type="text" placeholder="Task Name" id="task-name-input" />
-          </td>
-        </tr>
-        <tr>
-          <td>Task Description</td>
-          <td>
-            <input
-              type="text"
-              placeholder="Task Description"
-              id="task-description-input"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Deadline</td>
-          <td>
-            <input
-              type="datetime-local"
-              name="deadline"
-              id="task-deadline-input"
-            />
-          </td>
-        </tr>
-      </table>
 
-      <button onclick="createNonLinkedTask()">
+    <div id="project-div">
+      <div id="project-div-left-menu">
+        <div id="project-heading">
+          <span id="project-name">Project Name</span>
+        </div>
+        <div id="project-menu-list">
+          <ul>
+            <li onclick="showProjectTasks()">Tasks</li>
+            <li onclick="showProjectTeams()">Teams</li>
+            <li onclick="showProjectMembers()">Members</li>
+          </ul>
+        </div>
+      </div>
+      <div id="project-div-content">
+        <div id="project-div-content-top">
+          <span class="project-div-content-top-options" onclick="showProjectCreateTasksDiv()">Create Task</span>
+          <span class="project-div-content-top-options" onclick="showProjectCreateTeamDiv()">Create Team</span
+            class="project-div-content-top-options">
+          <span class="project-div-content-top-options" onclick="showProjectCreateAddMember()">Add Member</span
+            class="project-div-content-top-options">
+        </div>
+
+        <div id="project-div-content-create-task" class="content-box" style="background-color: beige;">
+          <table>
+            <tr>
+              <td>Task Name</td>
+              <td>
+                <input type="text" placeholder="Task Name" id="project-task-name-input" />
+              </td>
+            </tr>
+            <tr>
+              <td>Task Description</td>
+              <td>
+                <input type="text" placeholder="Task Description" id="project-task-description-input" />
+              </td>
+            </tr>
+            <tr>
+              <td>Deadline</td>
+              <td>
+                <input type="datetime-local" name="deadline" id="project-task-deadline-input" />
+              </td>
+            </tr>
+          </table>
+
+          <button onclick="createTaskInProject()">
+            Create Task
+          </button>
+        </div>
+        <div id="project-div-content-create-team" class="content-box">
+          <table>
+            <tr>
+              <td>Team Name</td>
+              <td>
+                <input type="text" placeholder="Team Name" id="project-team-name-input" />
+              </td>
+            </tr>
+            <tr>
+              <td>Team Description</td>
+              <td>
+                <input type="text" placeholder="Team Description" id="project-team-description-input" />
+              </td>
+            </tr>
+          </table>
+
+          <button onclick="createTeamInProject()">
+            Create Team
+          </button>
+        </div>
+        <div id="project-div-content-add-member" class="content-box">
+          <table>
+            <tr>
+              <td>Member Name</td>
+              <td>
+                <input type="text" placeholder="Member Name" id="project-team-add-member-name-input" />
+              </td>
+            </tr>
+            <tr>
+              <td>Member Email</td>
+              <td>
+                <input type="text" placeholder="Member Email" id="project-team-add-member-email-input" />
+              </td>
+            </tr>
+          </table>
+
+          <button onclick="addMemberToProject()">
+            Add Member
+          </button>
+        </div>
+        <div id="project-div-content-tasks" class="content-box">
+          <div id="project-div-content-tasks-top">
+            <span class="project-div-content-tasks-top-options" onclick="showProjectBacklogTasksDiv()">Backlog</span>
+            <span class="project-div-content-tasks-top-options" onclick="showProjectAssignedTasksDiv()">Assigned</span class="project-div-content-tasks-top-options">
+            <span class="project-div-content-tasks-top-options" onclick="showProjectUnassignedTasksDiv()">UnAssigned</span class="project-div-content-tasks-top-options">
+            <span class="project-div-content-tasks-top-options" onclick="showProjectCompletedTasksDiv()">Completed</span class="project-div-content-tasks-top-options">
+          </div>
+          <div id="project-div-content-tasks-backlog-list"></div>
+          <div id="project-div-content-tasks-assigned-list"></div>
+          <div id="project-div-content-tasks-unassigned-list"></div>
+          <div id="project-div-content-tasks-completed-list"></div>
+          <div id="project-div-content-tasks-selected-detail">
+
+          </div>
+        </div>
+        <div id="project-div-content-teams" class="content-box"></div>
+        <div id="project-div-content-members" class="content-box"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Modals -->
+  <div id="create-non-linked-task">
+    <i class="fa fa-close close-btn" onclick="hideCreateNonLinkedTasksModal()"></i>
+    <div class="modal-details" align="center">
+      <img src="plugins/images/task.jpg" alt="">
+      <p>Ease your work by setting up a new project and team. Click on create new project.Click on create new
+        project.Click on create new project.</p>
+    </div>
+    <table>
+      <tr>
+        <td>Task Name</td>
+        <td>
+          <input type="text" placeholder="Task Name" id="task-name-input" />
+        </td>
+      </tr>
+      <tr>
+        <td>Task Description</td>
+        <td>
+          <input type="text" placeholder="Task Description" id="task-description-input" />
+        </td>
+      </tr>
+      <tr>
+        <td>Deadline</td>
+        <td>
+          <input type="datetime-local" name="deadline" id="task-deadline-input" />
+        </td>
+      </tr>
+    </table>
+
+    <div class="modal-action-btn-div">
+      <button class="modal-action-btn" onclick="createNonLinkedTask()">
         Create Task
       </button>
-      <button onclick="hideCreateNonLinkedTasksModal()">
-        Close
-      </button>
     </div>
+  </div>
 
-    <div id="edit-non-linked-task">
-      <table>
-        <tr>
-          <td>Task Name</td>
-          <td>
-            <input
-              type="text"
-              placeholder="Task Name"
-              id="edit-task-name-input"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Task Description</td>
-          <td>
-            <input
-              type="text"
-              placeholder="Task Description"
-              id="edit-task-description-input"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Deadline</td>
-          <td>
-            <input
-              type="datetime-local"
-              name="deadline"
-              id="edit-task-deadline-input"
-            />
-          </td>
-        </tr>
-      </table>
+  <div id="edit-non-linked-task">
+    <table>
+      <tr>
+        <td>Task Name</td>
+        <td>
+          <input type="text" placeholder="Task Name" id="edit-task-name-input" />
+        </td>
+      </tr>
+      <tr>
+        <td>Task Description</td>
+        <td>
+          <input type="text" placeholder="Task Description" id="edit-task-description-input" />
+        </td>
+      </tr>
+      <tr>
+        <td>Deadline</td>
+        <td>
+          <input type="datetime-local" name="deadline" id="edit-task-deadline-input" />
+        </td>
+      </tr>
+    </table>
 
-      <button onclick="editNonLinkedTask()">
-        Save Changes
-      </button>
-      <button onclick="hideEditNonLinkedTasksModal()">
-        Close
-      </button>
+    <button onclick="editNonLinkedTask()">
+      Save Changes
+    </button>
+    <button onclick="hideEditNonLinkedTasksModal()">
+      Close
+    </button>
+  </div>
+  <div id="notify-non-linked-task">
+    <table>
+      <tr>
+        <td>Email To :</td>
+        <td>
+          <input type="text" placeholder="Email" id="notify-email-non-linked-task" />
+        </td>
+      </tr>
+      <tr>
+        <td>Notification Message :</td>
+        <td>
+          <input type="text" placeholder="Notification Message" id="notify-message-non-linked-task" />
+        </td>
+      </tr>
+      <tr>
+        <td>Notification Time :</td>
+        <td>
+          <input type="datetime-local" id="notify-non-linked-task-time-input" />
+        </td>
+      </tr>
+    </table>
+
+    <button onclick="notifyNonLinkedTask()">
+      Notify
+    </button>
+    <button onclick="hideNotifyNonLinkedTasksModal()">
+      Close
+    </button>
+  </div>
+  <!-- CREATE TEAM MODAL -->
+  <div id="create-team">
+    <i class="fa fa-close close-btn" onclick="hideCreateTeamModal()"></i>
+    <div class="modal-details" align="center">
+      <img src="plugins/images/project.jpg" alt="">
+      <p>Ease your work by setting up a new project and team. Click on create new project.Click on create new
+        project.Click on create new project.</p>
     </div>
-    <div id="notify-non-linked-task">
-      <table>
-        <tr>
-          <td>Email To :</td>
-          <td>
-            <input
-              type="text"
-              placeholder="Email"
-              id="notify-email-non-linked-task"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Notification Message :</td>
-          <td>
-            <input
-              type="text"
-              placeholder="Notification Message"
-              id="notify-message-non-linked-task"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Notification Time :</td>
-          <td>
-            <input
-              type="datetime-local"
-              id="notify-non-linked-task-time-input"
-            />
-          </td>
-        </tr>
-      </table>
-
-      <button onclick="notifyNonLinkedTask()">
-        Notify
-      </button>
-      <button onclick="hideNotifyNonLinkedTasksModal()">
-        Close
-      </button>
-    </div>
-    <div id="create-team">
-      <table>
-        <tr>
-          <td>Team Name :</td>
-          <td><input type="text" placeholder="Team Name" /></td>
-        </tr>
-        <tr>
-          <td>Team Description :</td>
-          <td><input type="text" placeholder="Team Description" /></td>
-        </tr>
-      </table>
-
-      <button onclick="createTeam()">
+    <table>
+      <tr>
+        <td>Team Name :</td>
+        <td><input type="text" placeholder="Team Name" /></td>
+      </tr>
+      <tr>
+        <td>Team Description :</td>
+        <td><input type="text" placeholder="Team Description" /></td>
+      </tr>
+    </table>
+    <div class="modal-action-btn-div">
+      <button class="modal-action-btn" onclick="createTeam()">
         Create Team
       </button>
     </div>
+  </div>
 
-    <!-- Create Project -->
-    <div id="create-project">
-      <table>
-        <tr>
-          <td>Project Name</td>
-          <td>
-            <input
-              type="text"
-              placeholder="Project Name"
-              id="project-name-input"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Project Description</td>
-          <td>
-            <input
-              type="text"
-              placeholder="Project Description"
-              id="project-description-input"
-            />
-          </td>
-        </tr>
-      </table>
+  <!-- Create Project -->
+  <div id="create-project">
+    <i class="fa fa-close close-btn" onclick="hideCreateProjectModal()"></i>
+    <div class="modal-details" align="center">
+      <img src="plugins/images/team.png" alt="">
+      <p>Ease your work by setting up a new project and team. Click on create new project.Click on create new
+        project.Click on create new project.</p>
+    </div>
+    <table>
+      <tr>
+        <td>Project Name</td>
+        <td>
+          <input type="text" placeholder="Project Name" id="project-name-input" />
+        </td>
+      </tr>
+      <tr>
+        <td>Project Description</td>
+        <td>
+          <input type="text" placeholder="Project Description" id="project-description-input" />
+        </td>
+      </tr>
+    </table>
 
-      <button onclick="createProject()">
+    <div class="modal-action-btn-div">
+      <button class="modal-action-btn" onclick="createProject()">
         Create Project
       </button>
-      <button onclick="hideCreateProjectModal()">
-        Close
-      </button>
     </div>
-    <script src="plugins/js/fuctions.js"></script>
-    <script src="plugins/js/index.js"></script>
-    <script src="plugins/js/user.js"></script>
-    <script src="plugins/js/showhide.js"></script>
-    <script src="plugins/js/task.js"></script>
-    <script src="plugins/js/team.js"></script>
-    <script src="plugins/js/project.js"></script>
-  </body>
+  </div>
+
+  <div id="modal-cover"></div>
+  <script src="plugins/js/fuctions.js"></script>
+  <script src="plugins/js/index.js"></script>
+  <script src="plugins/js/user.js"></script>
+  <script src="plugins/js/showhide.js"></script>
+  <script src="plugins/js/task.js"></script>
+  <script src="plugins/js/team.js"></script>
+  <script src="plugins/js/project.js"></script>
+</body>
+
 </html>

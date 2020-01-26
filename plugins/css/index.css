@@ -1,6 +1,10 @@
+*{
+    outline: none;
+}
 body{
     margin:0;
     padding:0;
+    font-family: opensans;
 }
 div{
     margin:0;
@@ -13,22 +17,49 @@ div{
     position:fixed;
     top:0;
     left:0;
-    background-color:rgb(28, 78, 128);
+    background-color:#5A5AFA; 
+     /* rgb(28, 78, 128); */
     color:white;
 }
+
+#logout-button{
+    height: 100%;
+    width: 100px;
+    line-height: 40px;
+    text-align: center;
+    /* border:1px solid black; */
+    float:right;
+    background-color:rgb(226, 23, 67);
+    color:#fff;
+    transition: all 0.4s ease;
+}
+#logout-button:hover{
+    cursor: pointer;
+    background-color:rgb(204, 15, 56);
+}
+#user-name-span{
+    /* border: 1px solid black; */
+    display: inline-block;
+    color: white;
+    box-sizing: border-box;
+    line-height: 40px;
+    padding: 0px 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-transform: capitalize;
+}
 #nav-icon{
-    display:block;
+    display:inline-block;
     width:40px;
     height:40px;
     color:white;
-    background-color: rgb(28, 78, 128);
+    background-color:#5A5AFA; 
     text-align: center;
     line-height: 40px;
     font-size: 24px;
 }
 #nav-icon:hover{
     cursor:pointer;
-    font-size:30px;
 }
 #side-icon-bar{
     width:40px;
@@ -36,10 +67,25 @@ div{
     position:fixed;
     bottom:0;
     left:0;
-    background-color:rgb(28, 78, 128);
+    background-color:#5A5AFA;
     z-index:3;
 }
-
+#side-icon-bar i{
+    height: 40px;
+    line-height: 40px;
+    /* border: 1px solid black; */
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    color: white;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+#side-icon-bar i:hover{
+    cursor: pointer;
+    background-color:rgb(23, 61, 100);
+}
 #content{
     width:  calc( 100% - 40px );
     height: calc( 100% - 40px );
@@ -54,3 +100,16 @@ table{
     text-align:center;
 }
 
+#modal-cover{
+    z-index: 3;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    position:fixed;
+    width:100%;
+    height: 100%;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+}

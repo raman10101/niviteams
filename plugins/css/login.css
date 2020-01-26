@@ -39,6 +39,7 @@
     position:relative;
     text-align: center;
     line-height: 30px;
+    
     box-sizing: border-box;
 }
 #login-content{
@@ -46,6 +47,7 @@
     width:100%;
     height:300px;
     box-sizing: border-box;
+    background-color: rgb(55, 102, 230);
     /* border:1px solid black; */
 }
 #login-close{

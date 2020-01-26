@@ -20,6 +20,7 @@ function showNonLinkedTaskDiv(){
 function showProjectListDiv(){
     hideModalDiv();
     hideContentDiv();
+    hideProjectDetailsDiv();
     fetchProjects();
     showElementById(PROJECT_LIST_ID);
 }
@@ -29,6 +30,22 @@ function showProjectDiv(){
     showProjectTasks();
     showElementById(PROJECT_DIV_ID);
     setInnerHtml('project-name', getCurrentProjectName());
+}
+function showProjectDetailsDiv(){
+    hideModalDiv();
+    showElementById(PROJECT_DETAILS_DIV_ID);
+}
+
+function hideProjectDetailsDiv(){
+    hideElementById(PROJECT_DETAILS_DIV_ID);
+}
+
+function showEditProject(){
+    showElementById("project-list-div-right-edit-div");
+}
+
+function hideEditProject(){
+    hideElementById("project-list-div-right-edit-div");
 }
 
 
@@ -63,6 +80,7 @@ function showProjectTeams(){
     showElementById(PROJECT_TASK_ID); 
 }
 function showProjectMembers(){
+    fetchTasksOfProject();
     hideProjectContentDiv();
     fetchMembersOfProject();
     showElementById(PROJECT_MEMBERS_ID); 
@@ -73,21 +91,25 @@ function hideAllProjectTaskDiv(){
     for(let i = 0; i<projectTasksDiv.length;i++){
         hideElementById(projectTasksDiv[i]);
     }
-}
+}  
 function showProjectBacklogTasksDiv(){
     hideAllProjectTaskDiv();
+    hideElementById("project-div-content-tasks-selected-detail");
     showElementById(BACKLOG_TASK_DIV_ID); 
 }
 function showProjectAssignedTasksDiv(){
     hideAllProjectTaskDiv();
+    hideElementById("project-div-content-tasks-selected-detail");
     showElementById(ASSIGNED_TASK_DIV_ID); 
 }
 function showProjectUnassignedTasksDiv(){
     hideAllProjectTaskDiv();
+    hideElementById("project-div-content-tasks-selected-detail");
     showElementById(UNASSIGNED_TASK_DIV_ID); 
 }
 function showProjectCompletedTasksDiv(){
     hideAllProjectTaskDiv();
+    hideElementById("project-div-content-tasks-selected-detail");
     showElementById(COMPLETED_TASK_DIV_ID); 
 }
 
@@ -118,37 +140,52 @@ function hideModalDiv(){
     }
 }
 function showCreateNonLinkedTasksModal(){
+    hideModalDiv();
+    showElementById(MODAL_COVER);
     showElementById(CREATE_NON_LINKED_TASK_MODAL);
 }
 function hideCreateNonLinkedTasksModal(){
     hideElementById(CREATE_NON_LINKED_TASK_MODAL);
+    hideElementById(MODAL_COVER);
 }
 
 function showEditNonLinkedTasksModal(){
+    hideModalDiv();
+    showElementById(MODAL_COVER);
     showElementById(EDIT_NON_LINKED_TASK_MODAL);
 }
 function hideEditNonLinkedTasksModal(){
     hideElementById(EDIT_NON_LINKED_TASK_MODAL);
+    hideElementById(MODAL_COVER);
 }
 
 
 function showNotifyNonLinkedTasksModal(){
+    hideModalDiv();
+    showElementById(MODAL_COVER);
     showElementById(NOTIFY_NON_LINKED_TASK_MODAL);
 }
 function hideNotifyNonLinkedTasksModal(){
     hideElementById(NOTIFY_NON_LINKED_TASK_MODAL);
+    hideElementById(MODAL_COVER);
 }
 
 function showCreateTeamModal(){
+    hideModalDiv();
+    showElementById(MODAL_COVER);
     showElementById(CREATE_TEAM_MODAL);
 }
 function hideCreateTeamModal(){
     hideElementById(CREATE_TEAM_MODAL);
+    hideElementById(MODAL_COVER);
 }
 
 function showCreateProjectModal(){
+    hideModalDiv();
+    showElementById(MODAL_COVER);
     showElementById(CREATE_PROJECT_MODAL);
 }
 function hideCreateProjectModal(){
     hideElementById(CREATE_PROJECT_MODAL);
+    hideElementById(MODAL_COVER);
 }

@@ -4,6 +4,10 @@ const  WELCOME_DIV_ID = 'intro-page';
 const  NON_LINKED_TASKS_ID = 'non-linked-tasks';
 const  PROJECT_LIST_ID = 'project-list-div';
 const  PROJECT_DIV_ID = 'project-div';
+const PROJECT_DETAILS_DIV_ID = 'project-list-div-right';
+
+// COVER DIV
+const MODAL_COVER = 'modal-cover';
 
 // PROJECT CONTENT DIV IDS
 const CREATE_PROJECT_TASK_ID = 'project-div-content-create-task';
@@ -37,4 +41,4 @@ const CURR_PROJECT_TASKS = "project_tasks";
 const CURR_PROJECT_MEMBERS = "project_members";
 const CURR_TASK_ID = "current_task_id";
 const CURR_TASK = "current_task";
-const CURR_COMMENT_LIST = "current_comment_list";
+const CURR_COMMENT_LIST = "current_comment_list"; 
