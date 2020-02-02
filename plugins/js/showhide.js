@@ -19,6 +19,7 @@ function showNonLinkedTaskDiv(){
 }
 function showProjectListDiv(){
     hideModalDiv();
+    hideElementById(MODAL_COVER);
     hideContentDiv();
     hideProjectDetailsDiv();
     fetchProjects();
@@ -127,7 +128,7 @@ function showProjectTasksDetailDiv(e){
     showElementById(TASK_DETAIL_DIV); 
 }
 function hideProjectTasksDetailDiv(){
-    hideElementById(TASK_DETAIL_DIV); 
+    // hideElementById(TASK_DETAIL_DIV); 
 }
 
 // Show Hide Modals

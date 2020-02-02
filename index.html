@@ -34,14 +34,14 @@
   </div>
   <div id="side-icon-bar" align="center">
     <i class="fa fa-home" onclick="showIntroPageDiv();" aria-hidden="true"></i>
-    <i class="fa fa-bookmark" onclick="showIntroPageDiv();" aria-hidden="true"></i>
-    <i class="fa fa-briefcase" onclick="showIntroPageDiv();" aria-hidden="true"></i>
+    <i class="fa fa-bookmark" onclick="showNonLinkedTaskDiv();" aria-hidden="true" style="display: none;"></i>
+    <i class="fa fa-briefcase" onclick="showProjectListDiv();" aria-hidden="true"></i>
   </div>
   <div id="sidebar">
     <div class="side-item-box">
       <span onclick="showIntroPageDiv(); toggleSidebar()">Welcome</span>
     </div>
-    <div class="side-item-box">
+    <div class="side-item-box" style="display: none;">
       <span onclick="showNonLinkedTaskDiv(); toggleSidebar()">Tasks</span>
     </div>
     <div class="side-item-box">
@@ -53,12 +53,12 @@
     <div id="intro-page">
       <div id="intro-center-box">
         <h2>Welcome To Nivi Teams</h2>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. </p>
+        <p>Deliver and accelerate your work by incorporating the agile practice. Nivi will manage and track all your
+          project tasks in one place and maintain transparency, accountability, flexibility and gives accurate
+          estimation of your work. </p>
         <table id="intro-table">
           <tr>
-            <td align="center">
+            <td align="center" style="visibility: hidden;;">
               <img src="plugins/images/task.jpg" alt="" class="intro-img">
               <h2>TASKS</h2>
               <p class="intro-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
@@ -67,20 +67,18 @@
               <span onclick="showCreateNonLinkedTasksModal()">Create Task</span>
             </td>
             <td align="center">
+              <img src="plugins/images/team.png" alt="" class="intro-img">
+              <h2>PROJECTS</h2>
+              <p class="intro-para">Work collaboratively by bringing all your team partners together in an effective and organized way.</p>
+              <span onclick="showCreateProjectModal()">Create Project</span>
+            </td>
+            <td align="center" style="visibility: hidden;;">
               <img src="plugins/images/project.jpg" alt="" class="intro-img">
               <h2>TEAMS</h2>
               <p class="intro-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                 Ipsum has been the
                 industry's standard dummy text ever since the 1500s</p>
               <span onclick="showCreateTeamModal()">Create Team</span>
-            </td>
-            <td align="center">
-              <img src="plugins/images/team.png" alt="" class="intro-img">
-              <h2>PROJECTS</h2>
-              <p class="intro-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the
-                industry's standard dummy text ever since the 1500s</p>
-              <span onclick="showCreateProjectModal()">Create Project</span>
             </td>
           </tr>
         </table>
@@ -109,23 +107,44 @@
       </table>
     </div>
     <div id="project-list-div" class="content-main-div">
-      <div id="project-list-div-left"></div>
+      <div id="project-list-div-left">
+        <div id="project-list-div-left-head">Project</div>
+      </div>
       <div id="project-list-div-right">
         <div id="project-list-div-right-name">Project Name</div>
         <div id="project-list-div-right-description">Project Description</div>
         <div id="project-list-div-right-createdon">10 - 10- 2019 00: 12: 00</div>
 
         <div id="project-list-div-right-file">
-          <input type="file" id="file-input"><button id="file-upload-button"
-            onclick="fileUploadInProject()">Upload</button>
+          <input type="file" id="file-input"><button id="file-upload-button" onclick="fileUploadInProject()">
+            Upload
+          </button>
         </div>
-
+        <div id="project-selected-details-files-list">
+          <b>Attachments: </b><br>
+          <ul id="project-files-list">
+            <li>Wesf43467deee.png</li>
+            <li>Project_prposal.pdf</li>
+            <li>Descrpition.pdf</li>
+          </ul>
+        </div>
         <div id="project-list-div-right-edit-div">
           <i class="fa fa-close" onclick="hideEditProject()"></i>
           <input type="text" name="" id="project-name-edit" placeholder="name">
           <input type="text" name="" id="project-description-edit" placeholder="description">
           <div id="done-btn" onclick="updateProjectDetails()">
             Done
+          </div>
+        </div>
+        <div id="project-list-div-right-btn-div">
+          <div id="project-list-div-right-open" class="project-btn" onclick="showProjectDiv();">
+            Open Project
+          </div>
+          <div id="project-list-div-right-edit" class="project-btn" onclick="showEditProject();">
+            Edit
+          </div>
+          <div id="project-list-div-right-delete" class="project-btn" onclick=" deleteProject();">
+            Delete
           </div>
         </div>
       </div>
@@ -139,18 +158,25 @@
         <div id="project-menu-list">
           <ul>
             <li onclick="showProjectTasks()">Tasks</li>
-            <li onclick="showProjectTeams()">Teams</li>
+            <li onclick="showProjectTeams()" style="display: none;">Teams</li>
             <li onclick="showProjectMembers()">Members</li>
           </ul>
         </div>
       </div>
       <div id="project-div-content">
         <div id="project-div-content-top">
-          <span class="project-div-content-top-options" onclick="showProjectCreateTasksDiv()">Create Task</span>
-          <span class="project-div-content-top-options" onclick="showProjectCreateTeamDiv()">Create Team</span
-            class="project-div-content-top-options">
-          <span class="project-div-content-top-options" onclick="showProjectCreateAddMember()">Add Member</span
-            class="project-div-content-top-options">
+          <span class="project-div-content-top-options tooltip" onclick="showProjectCreateTasksDiv()">
+            <img src="plugins/images/icons/create_task.png" alt="" srcset="">
+            <span class="tooltiptext">Create Task</span>
+          </span>
+          <span class="project-div-content-top-options tooltip" onclick="showProjectCreateTeamDiv()">
+            <img src="plugins/images/icons/create_team.png" alt="" srcset="">
+            <span class="tooltiptext">Create Team</span>
+          </span>
+          <span class="project-div-content-top-options tooltip" onclick="showProjectCreateAddMember()">
+            <img src="plugins/images/icons/add_member.png" alt="" srcset="">
+            <span class="tooltiptext">Add Member</span>
+          </span>
         </div>
 
         <div id="project-div-content-create-task" class="content-box" style="background-color: beige;">
@@ -221,17 +247,86 @@
         </div>
         <div id="project-div-content-tasks" class="content-box">
           <div id="project-div-content-tasks-top">
-            <span class="project-div-content-tasks-top-options" onclick="showProjectBacklogTasksDiv()">Backlog</span>
-            <span class="project-div-content-tasks-top-options" onclick="showProjectAssignedTasksDiv()">Assigned</span class="project-div-content-tasks-top-options">
-            <span class="project-div-content-tasks-top-options" onclick="showProjectUnassignedTasksDiv()">UnAssigned</span class="project-div-content-tasks-top-options">
-            <span class="project-div-content-tasks-top-options" onclick="showProjectCompletedTasksDiv()">Completed</span class="project-div-content-tasks-top-options">
+            <span class="project-div-content-tasks-top-options tooltip" onclick="showProjectBacklogTasksDiv()">
+              <i class="fa fa-thumb-tack"></i>
+              <span class="tooltiptext">Backlog Tasks</span>
+            </span>
+            <span class="project-div-content-tasks-top-options tooltip" onclick="showProjectAssignedTasksDiv()">
+              <i class="fa fa-bookmark-o"></i>
+              <span class="tooltiptext">Assigned Tasks</span>
+            </span>
+            <span class="project-div-content-tasks-top-options tooltip" onclick="showProjectUnassignedTasksDiv()">
+              <i class="fa fa-minus-square-o"></i>
+              <span class="tooltiptext">Unassigned Tasks</span>
+            </span>
+            <span class="project-div-content-tasks-top-options tooltip" onclick="showProjectCompletedTasksDiv()">
+              <i class="fa fa-check-square-o"></i>
+              <span class="tooltiptext">Completed Tasks</span>
+            </span>
           </div>
           <div id="project-div-content-tasks-backlog-list"></div>
           <div id="project-div-content-tasks-assigned-list"></div>
           <div id="project-div-content-tasks-unassigned-list"></div>
           <div id="project-div-content-tasks-completed-list"></div>
           <div id="project-div-content-tasks-selected-detail">
-
+            <!-- tasks in detail -->
+            <div id="project-task-selected-head-div">Task Name</div>
+            <div id="project-task-selected-details-div">
+              <div id="project-task-selected-details-created-by">
+                Created by : Marshi S
+              </div>
+              <div id="project-task-selected-details-assigned-to">
+                Assigned to : Marshi S
+              </div>
+              <div id="project-task-selected-details-description">
+                description
+              </div>
+              <div id="project-task-selected-details-file-upload">
+                <input type="file" id="file-input-project-task"><button id="task-file-upload-button"
+                  onclick="fileUploadInProjectTask()">Upload</button>
+              </div>
+              <div id="project-task-selected-details-files-list">
+                <b>Attachments: </b><br>
+                <ul id="task-files-list">
+                  <!-- <li>Wesf43467deee.png</li>
+                  <li>Project_prposal.pdf</li>
+                  <li>Descrpition.pdf</li> -->
+                </ul>
+              </div>
+              <div id="project-task-selected-details-assign-to-user">
+                <select name="members" id="member_dropdown"></select>
+                <button class="task-btn" onclick="assignProjectTaskToMember()">Assign</button>
+              </div>
+              <div id="project-task-selected-details-options-list">
+                <i class="fa fa-check" id="complete-task-btn" onclick="completeProjectTaskOfMember()"></i>
+                <i class="fa fa-pencil-square" id="edit-task-btn" onclick=""></i>
+                <i class="fa fa-user-plus" id="assign-to-user-btn" onclick="showAssignTaskBox()"></i>
+                <i class="fa fa-user-times" id="unassign-user-btn" onclick="unassignProjectTaskOfMember()"></i>
+                <i class="fa fa-trash" id="delete-task-btn" onclick="deleteProjectTask()"></i>
+              </div>
+            </div>
+            <div id="project-task-selected-comment-div">
+              <div id="comment-list-box">
+                <!-- <div class="comment-box">
+                  <div class="comment-sender-details">
+                    <div class="comment-user-name">Marshi S</div>
+                    <div class="comment-timestamp">10-10-2019 12:00:01</div>
+                  </div>
+                  <div class="comment-text">Please guide me complete this work. i need it as soon as possible. Hello,
+                    answer me please tell me how to do it.</div>
+                </div>
+                <div class="comment-box">
+                  <div class="comment-user-name">Jeena J</div>
+                  <div class="comment-timestamp">10-10-2019 12:00:01</div>
+                  <div class="comment-text">Please guide me complete this work. </div>
+                </div> -->
+              </div>
+              <div id="comment-input-box">
+                <input type="text" placeholder="Comment here" id="comment_message">
+                <i class="fa fa-send" onclick="addCommentToProjectTask()"></i>
+                <i class="fa fa-bars"></i>
+              </div>
+            </div>
           </div>
         </div>
         <div id="project-div-content-teams" class="content-box"></div>

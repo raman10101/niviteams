@@ -32,3 +32,10 @@ function checkForInvitesAccepted(){
         }
     });
 }
+
+function removeActiveStateFromProjects(){
+    let arr = document.getElementsByClassName('project-list-box');
+    for(let i =0; i< arr.length;i++){
+        arr[i].classList.remove('project-list-box-active');
+    }
+}
